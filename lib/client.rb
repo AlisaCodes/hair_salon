@@ -22,8 +22,8 @@ class Client
   end
 
   define_method(:save) do
-    result = DB.exec("INSERT INTO clients (name, phone_number, stylist_id) VALUES ('#{@name}', '#{@phone_number}', #{@stylist_id}) RETURNING id;")
-    @id = result.first().fetch('id').to_i()
+    result = DB.exec("INSERT INTO clients (name, phone_number, stylist_id) VALUES ('#{@name}', '#{@phone_number}', #{@stylist_id});")
+    # @id = result.first().fetch('id').to_i()
   end
 
 
@@ -55,5 +55,17 @@ class Client
       end
     end
     found_client
+  end
+
+  define_method(:update) do |attributes|
+    @name = attributes.fetch(:name)
+    @phone_number = attributes.fetch(:phone_number)
+    @stylist_id = self.stylist_id()
+    DB.exec("UPDATE stylists SET name, specialty = '#{@name}', '#{@specialty}' WHERE stylist_id = #{@stylist_id};")
+  end
+
+  define_method(:delete) do
+    DB.exec("DELETE FROM clients WHERE id = #{self.id()};")
+    DB.exec("DELETE FROM stylists WHERE list_id = #{self.id()};")
   end
 end

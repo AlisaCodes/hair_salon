@@ -23,7 +23,7 @@ post('/') do
   elsif params.fetch('client_name', :nil => nil).is_a?(String)
     client_name = params.fetch('client_name')
     phone_number = params.fetch('phone_number')
-    client = Client.new({:client_name => client_name, :phone_number => phone_number, :stylist_id => nil})
+    client = Client.new({:id => nil,:client_name => client_name, :phone_number => phone_number, :stylist_id => nil})
     client.save()
   end
     @stylists = Stylist.all()

@@ -1,6 +1,49 @@
-<h1>Welcome to the Salon</h1>
+<h1>Welcome to Your Salon</h1>
 
 <div class="container">
-  <a href="/lists">View All Stylists</a>
-  <a href="/lists/new">Add New Stylist</a>
+
+  <h1>Add Stylist</h1>
+  <form action="/" method="post">
+    <label for="name">Stylists's Name:</label>
+    <input type="text" name="name">
+
+    <label for="specialty">Stylists's Specialty:</label>
+    <input type="text" name="specialty">
+
+    <button name="button">Add</button>
+  </form>
+
+<% if @stylists.any? %>
+  <% @stylists.each() do |stylist| %>
+    <ul>
+      <li><%= stylist.name %> <%= stylist.specialty %></li>
+    </ul>
+  <% end %>
+<% else %>
+  There are no stylists listed.
+<% end %>
+
+
+  <h1>Add Client</h1>
+  <form action="/" method="post">
+    <label for="client_name">Client's Name:</label>
+    <input type="text" name="client_name">
+
+    <label for="phone_number">Client's Phone Number:</label>
+    <input type="text" name="phone_number">
+
+    <button name="button">Add</button>
+  </form>
+
+  <% if @clients.any? %>
+    <% @clients.each() do |client| %>
+      <ul>
+        <li><%= client.name %> <%= client.phone_number %></li>
+      </ul>
+    <% end %>
+  <% else %>
+    There are no clients listed.
+  <% end %>
+
+
 </div>

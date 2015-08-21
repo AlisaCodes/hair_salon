@@ -1,11 +1,11 @@
 class Client
-  attr_reader(:name, :phone_number, :stylist_id)
-
+  attr_reader(:client_name, :phone_number, :stylist_id)
+# go in and add client ID to all attributes/hashes of attributes
   @@clients = []
   clients = []
 
   define_method(:initialize) do |attributes|
-    @name = attributes.fetch(:name)
+    @client_name = attributes.fetch(:client_name)
     @phone_number = attributes.fetch(:phone_number)
     @stylist_id = attributes.fetch(:stylist_id)
     @clients = []
@@ -14,7 +14,7 @@ class Client
 
 
   define_method(:==) do |another_client|
-    self.name().==(another_client.name()).&(self.stylist_id().==(another_client.stylist_id()))
+    self.client_name().==(another_client.client_name()).&(self.stylist_id().==(another_client.stylist_id()))
   end
 
   define_method(:clients) do
@@ -22,7 +22,7 @@ class Client
   end
 
   define_method(:save) do
-    result = DB.exec("INSERT INTO clients (name, phone_number, stylist_id) VALUES ('#{@name}', '#{@phone_number}', #{@stylist_id});")
+    result = DB.exec("INSERT INTO clients (client_name, phone_number, stylist_id) VALUES ('#{@client_name}', '#{@phone_number}', #{@stylist_id});")
     # @id = result.first().fetch('id').to_i()
   end
 
@@ -37,11 +37,11 @@ class Client
     returned_clients = DB.exec("SELECT * FROM clients;")
     clients = []
     returned_clients.each() do |client|
-      name = client.fetch("name")
+      client_name = client.fetch("client_name")
       phone_number = client.fetch("phone_number")
       stylist_id = client.fetch("stylist_id").to_i()
 
-      clients.push(Client.new({:name => name, :phone_number => phone_number, :stylist_id => stylist_id}))
+      clients.push(Client.new({:client_name => client_name, :phone_number => phone_number, :stylist_id => stylist_id}))
     end
     clients
   end
@@ -58,10 +58,10 @@ class Client
   end
 
   define_method(:update) do |attributes|
-    @name = attributes.fetch(:name)
+    @client_name = attributes.fetch(:client_name)
     @phone_number = attributes.fetch(:phone_number)
     @stylist_id = self.stylist_id()
-    DB.exec("UPDATE stylists SET name, specialty = '#{@name}', '#{@specialty}' WHERE stylist_id = #{@stylist_id};")
+    DB.exec("UPDATE stylists SET client_name, specialty = '#{@client_name}', '#{@specialty}' WHERE stylist_id = #{@stylist_id};")
   end
 
   define_method(:delete) do
